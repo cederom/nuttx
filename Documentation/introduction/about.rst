@@ -195,9 +195,9 @@ Key features of NuttX include:
   * VNC Server.
   * ``mmap``-able, framebuffer character driver.
   * NX: A graphics library, tiny windowing system and tiny font support that works with either
-    framebuffer or LCD drivers. Documented in the :doc:`/components/nxgraphics/index` manual.
+    framebuffer or LCD drivers. Documented in the :ref:`nx_graphics` manual.
   * Font management sub-system.
-  * :doc:`/applications/graphics/nxwidgets/index`: NXWidgets is library of graphic objects, or "widgets," (labels,
+  * :ref:`nxwidgets`: NXWidgets is library of graphic objects, or "widgets," (labels,
     buttons, text boxes, images, sliders, progress bars, etc.). NXWidgets is written in C++ and
     integrates seamlessly with the NuttX NX graphics and font management subsystems.
   * NxWM is the tiny NuttX window manager based on NX and NxWidgets.

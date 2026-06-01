@@ -1,18 +1,21 @@
-========
-Appendix
-========
+.. _nx_appendix:
 
-``graphics/`` Directory Structure
-=================================
+NX Appendix
+===========
+
+.. _nx_appendix_a:
+
+NX Appendix A: ``graphics/`` Directory Structure
+------------------------------------------------
 
 The graphics capability consist both of components internal to the RTOS
 and of user-callable interfaces. In the NuttX kernel mode build there
 are some components of the graphics subsystem are callable in user mode
 and other components that are internal to the RTOS. The directory
-``nuttx/graphics`` contains only those components that are internal to
+``nuttx/graphics/`` contains only those components that are internal to
 the RTOS. User callable functions must be part of a library that can be
 linked against user applications. This user callable interfaces are
-provided in sub-directories under ``nuttx/libnx``.
+provided in sub-directories under ``nuttx/libnx/``.
 
 ``libnx/nx``
    Common callable interfaces that are, logically, part of both nxmu and
@@ -45,18 +48,21 @@ provided in sub-directories under ``nuttx/libnx``.
    This is where the NXTOOLKIT implementation resides. This toolkit is
    built on top of NX and works with the multi-user NX front-end. See
    ``include/nuttx/nx/nxtk.h``.
-``apps/graphics/NxWidgets``
+``nuttx-apps/graphics/NxWidgets``
    The :ref:`NxWidgets <nxwidgets>` code is provided as a separate
-   package provided in the ``apps/`` repository.
+   package provided in the ``nuttx-apps/`` repository.
 ``graphics/nxterm``
    The NxTerm driver is built on top of NX and works with the multi-user
    NX front-end. See ``include/nuttx/nx/nxterm.h``.
 
-NX Configuration Options
-========================
+
+.. _nx_appendix_b:
+
+NX Appendix B: Configuration Options
+------------------------------------
 
 General Configuration Settings
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``CONFIG_NX``
    Enables overall support for graphics library and NX
@@ -85,7 +91,7 @@ General Configuration Settings
    position, size, etc.
 
 NXGL Configuration Settings
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``CONFIG_NX_NPLANES``:
    Some YUV color formats requires support for multiple planes, one for
@@ -106,8 +112,8 @@ NXGL Configuration Settings
    orientations. This option is only available for use with frame buffer
    drivers and only with 16-, 24-, or 32-bit RGB color formats.
 
-Configuration Settings
-----------------------
+NX Configuration Settings
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``CONFIG_NX_XYINPUT``:
    Build in support for an X/Y input such as a mouse or a touscreen.
@@ -119,7 +125,7 @@ Configuration Settings
    ``CONFIG_LCD_NOGETRUN`` are defined.
 
 NX Server Configuration Settings
---------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``CONFIG_NX_BLOCKING``
    Open the client message queues in blocking mode. In this case,
@@ -133,7 +139,7 @@ NX Server Configuration Settings
    pre-allocated).
 
 NXTK Configuration Settings
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``CONFIG_NXTK_BORDERWIDTH``:
    Specifies the width of the border (in pixels) used with framed
@@ -151,7 +157,7 @@ NXTK Configuration Settings
    clicked over a visible portion of the window.
 
 NXFONTS Configuration Settings
-------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ``CONFIG_NXFONTS_CHARBITS``:
    The number of bits in the character set. Current options are only 7
@@ -209,7 +215,7 @@ NXFONTS Configuration Settings
    serifs) (font ID ``FONTID_SERIF38X49B`` == 13).
 
 NxTerm Configuration Settings
------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 General NxTerm settings.
 
@@ -274,8 +280,11 @@ NxTerm input options:
    The number of threads that can be waiting for read data available.
    Default: 4
 
-Installing New Fonts
-====================
+
+.. _nx_appendix_c:
+
+NX Appendix C: Installing New Fonts
+-----------------------------------
 
 **The BDF Font Converter**. There is a tool called *bdf-converter* in
 the directory ``tools/.``. The *bdf-converter* program be used to
@@ -297,13 +306,13 @@ format traditionally used for X-11 bitmap fonts.
 and installing a new font in the NX graphic system. The first two steps
 only apply if you are using the BDF font converter program.
 
-#. Locate a font in BDF format. There are many good BDF bitmap fonts
+1. Locate a font in BDF format. There are many good BDF bitmap fonts
    bundled with X-11. See `this
    link <http://www.cl.cam.ac.uk/~mgk25/ucs-fonts.html>`__, as an
-   example,
+   example.
 
-#. Use the *bdf-converter* program to convert the BDF font to the NuttX
-   font format. This will result in a C header file containing
+2. Use the ``nuttx/tools/bdf-converter`` program to convert the BDF font
+   to the NuttX font format. This will result in a C header file containing
    definitions. That header file should be installed at, for example,
    ``graphics/nxfonts/nxfonts_myfont.h``.
 
@@ -414,8 +423,7 @@ CONFIG_NXFONT_SANS23X27 for examaples:
 
 9. ``graphics/nxfonts/nxfonts_getfont.c``. Finally, we need to
    extend the logic that does the run-time font lookups so that can find
-   our new font. The lookup function is
-   ```NXHANDLE nxf_getfonthandle(enum nx_fontid_e fontid)`` <#nxfgetfonthandle>`__.
+   our new font. The lookup function is :c:func:`nxf_getfonthandle`. 
    Note that the lookup is based on the font ID that was defined in step
    4. The new font information needs to be added to data structures used
    by that function:
@@ -440,14 +448,17 @@ CONFIG_NXFONT_SANS23X27 for examaples:
       NULL
     };
 
-NX Test Coverage
-================
 
-``apps/examples/nx``. The primary test tool for debugging NX resides
-at ``apps/examples/nx``.
+.. _nx_appendix_d:
 
-**Building** ``apps/examples/nx``. NX testing was performed using
-``apps/examples/nx`` with the Linux/Cygwin-based NuttX simulator.
+NX Appendix D: Test Coverage
+----------------------------
+
+``nuttx-apps/examples/nx``. The primary test tool for debugging NX resides
+at ``nuttx-apps/examples/nx``.
+
+**Building** ``nuttx-apps/examples/nx``. NX testing was performed using
+``nuttx-apps/examples/nx`` with the Linux/Cygwin-based NuttX simulator.
 Configuration files for building this test can be found in
 ``boards/sim/sim/sim/configs/nx`` and
 ``boards/sim/sim/sim/configs/nx11``. There are two alternative
@@ -490,156 +501,166 @@ configurations for building the simulation:
    -  Refer to the :doc:`/platforms/sim/sim/boards/sim/index` file for
       additional information.
 
-**Test Coverage**. At present, ``apps/examples/nx``\ t only exercises a
-subset of NX; the remainder is essentially untested. The following table
+**Test Coverage**. At present, ``nuttx-apps/examples/nx``\ t only exercises
+a subset of NX. The remainder is essentially untested. The following table
 describes the testing performed on each NX API:
 
-NXGLIB API Test Coverage
-------------------------
 
-================================ ==================================== ========
-Function                         Special Setup/Notes                  Verified
-================================ ==================================== ========
-``nxgl_rgb2yuv()``               .                                    NO
-``nxgl_yuv2rgb()``               .                                    NO
-``nxgl_rectcopy()``              .                                    YES
-``nxgl_rectoffset()``            .                                    YES
-``nxgl_vectoradd()``             .                                    YES
-``nxgl_vectorsubtract()``        .                                    YES
-``nxgl_rectintersect()``         .                                    YES
-``nxgl_rectunion()``             .                                    YES
-``nxgl_nonintersecting()``       .                                    YES
-``nxgl_rectoverlap()``           .                                    YES
-``nxgl_rectinside()``            .                                    YES
-``nxgl_rectsize()``              .                                    YES
-``nxgl_nullrect()``              .                                    YES
-``nxgl_runoffset()``             Verified by apps/examples/nxlines.   YES
-``nxgl_runcopy()``               .                                    NO
-``nxgl_trapoffset()``            Verified by apps/examples/nxlines.   YES
-``nxgl_trapcopy()``              Verified by apps/examples/nxlines.   YES
-``nxgl_colorcopy``               .                                    YES
-``nxgl_splitline``               Verified using apps/examples/nxlines YES
-                                 Generally works well, but has some
-                                 accuracy/overflow problems wide
-                                 lines that are nearly horizontal.
-                                 There is a "fudge factor" that seems
-                                 to eliminate the problem, but there
-                                 could still be issues in some
-                                 configurations.
-``nxgl_circlepts``               Verified by apps/examples/nxlines.   YES
-``nxgl_circletraps``             Verified by apps/examples/nxlines.   YES
-================================ ==================================== ========
+NXGLIB API Test Coverage
+^^^^^^^^^^^^^^^^^^^^^^^^
+
+=============================== ==================================== ========
+Function                        Special Setup/Notes                  Verified
+=============================== ==================================== ========
+:c:func:`nxgl_rgb2yuv`                                               NO
+:c:func:`nxgl_yuv2rgb`                                               NO
+:c:func:`nxgl_rectcopy`                                              YES
+:c:func:`nxgl_rectoffset`                                            YES
+:c:func:`nxgl_vectoradd`                                             YES
+:c:func:`nxgl_vectorsubtract`                                        YES
+:c:func:`nxgl_rectintersect`                                         YES
+:c:func:`nxgl_rectunion`                                             YES
+:c:func:`nxgl_nonintersecting`                                       YES
+:c:func:`nxgl_rectoverlap`                                           YES
+:c:func:`nxgl_rectinside`                                            YES
+:c:func:`nxgl_rectsize`                                              YES
+:c:func:`nxgl_nullrect`                                              YES
+:c:func:`nxgl_runoffset`        Verified by                          YES
+                                nuttx-apps/examples/nxlines.
+:c:func:`nxgl_runcopy`                                               NO
+:c:func:`nxgl_trapoffset`       Verified by                          YES
+                                nuttx-apps/examples/nxlines.
+:c:func:`nxgl_trapcopy`         Verified by                          YES
+                                nuttx-apps/examples/nxlines.
+:c:func:`nxgl_colorcopy`                                             YES
+:c:func:`nxgl_splitline`        Verified using                       YES
+                                nuttx-apps/examples/nxlines.
+                                Generally works well, but has some
+                                accuracy/overflow problems wide
+                                lines that are nearly horizontal.
+                                There is a "fudge factor" that seems
+                                to eliminate the problem, but there
+                                could still be issues in some
+                                configurations.
+:c:func:`nxgl_circlepts`        Verified by                          YES
+                                nuttx-apps/examples/nxlines.
+:c:func:`nxgl_circletraps`      Verified by                          YES
+                                nuttx-apps/examples/nxlines.
+=============================== ==================================== ========
+
 
 NX Server Callbacks Test Coverage
----------------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-============== ==================== ========
-Function       Special Setup/Notes  Verified
-============== ==================== ========
-``redraw()``   .                    YES
-``position()`` .                    YES
-``mousein()``  .                    YES
-``kbdin()``    .                    YES
-============== ==================== ========
+=================== ==================== ========
+Function            Special Setup/Notes  Verified
+=================== ==================== ========
+:c:func:`redraw`                         YES
+:c:func:`position`                       YES
+:c:func:`mousein`                        YES
+:c:func:`kbdin`                          YES
+=================== ==================== ========
+
 
 NX API Test Coverage
---------------------
+^^^^^^^^^^^^^^^^^^^^
 
-========================= ===============================================================  ========
-Function                  Special Setup/Notes                                              Verified
-========================= ===============================================================  ========
-``nx_runinstance()``      .                                                                YES
-``nx_connectinstance()``  .                                                                YES
-``nx_disconnect()``       .                                                                YES
-``nx_eventhandler()``     .                                                                YES
-``nx_eventnotify()``      This is not used in the current version of apps/examples/nx,     NO
-                          was tested in a previous version)
-``nx_openwindow()``       Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config file``
-``nx_closewindow()``      Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y``                    YES
-                          in the ``<NuttX-Directory>/.config`` file
-``nx_requestbkgd()``      Verified by ``apps/examples/nxtext`` and                         YES
-                          ``apps/examples/nxhello``.
-``nx_releasebkgd()``      Verified by ``apps/examples/nxtext`` and                         YES
-                          ``apps/examples/nxhello``.
-``nx_getposition()``      .                                                                NO
-``nx_setposition()``      Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file
-``nx_setsize()``          Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file
-``nx_raise()``            Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file
-``nx_lower()``            Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file
-``nx_modal()``            .                                                                NO
-``nx_setvisibility()``    Exercised using Twm4Nx                                           YES, Informally
-``nx_ishidden()``         Exercised using Twm4Nx                                           YES, Informally
-``nx_fill()``             Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file
-``nx_getrectangle()``     .                                                                YES
-``nx_filltrapezoid()``    Verified by ``apps/examples/nxlines``.                           YES
-``nx_drawline()``         by ``apps/examples/nxlines``.                                    YES
-``nx_drawcircle()``       Verified by ``apps/examples/nxlines``.                           YES
-``nx_fillcircle()``       Verified by ``apps/examples/nxlines``.                           YES
-``nx_setbgcolor()``       .                                                                YES
-``nx_move()``             Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file
-``nx_bitmap()``           Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
-                          ``<NuttX-Directory>/.config`` file.
-``nx_kbdin()``            .                                                                YES
-``nx_mousein()``          .                                                                YES
-========================= ===============================================================  ========
+============================= ===============================================================  ========
+Function                      Special Setup/Notes                                              Verified
+============================= ===============================================================  ========
+:c:func:`nx_runinstance`                                                                       YES
+:c:func:`nx_connectinstance`                                                                   YES
+:c:func:`nx_disconnect`                                                                        YES
+:c:func:`nx_eventhandler`                                                                      YES
+:c:func:`nx_eventnotify`      This is not used in the current version                          NO
+                              of nuttx-apps/examples/nx, was tested in a previous version).
+:c:func:`nx_openwindow`       Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config file``
+:c:func:`nx_closewindow`      Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y``                    YES
+                              in the ``nuttx/.config`` file
+:c:func:`nx_requestbkgd`      Verified by ``nuttx-apps/examples/nxtext`` and                   YES
+                              ``nuttx-apps/examples/nxhello``.
+:c:func:`nx_releasebkgd`      Verified by ``nuttx-apps/examples/nxtext`` and                   YES
+                              ``nuttx-apps/examples/nxhello``.
+:c:func:`nx_getposition`      .                                                                NO
+:c:func:`nx_setposition`      Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file
+:c:func:`nx_setsize`          Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file
+:c:func:`nx_raise`            Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file
+:c:func:`nx_lower`            Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file
+:c:func:`nx_modal`            .                                                                NO
+:c:func:`nx_setvisibility`    Exercised using ``Twm4Nx``                                       YES, Informally
+:c:func:`nx_ishidden`         Exercised using ``Twm4Nx``                                       YES, Informally
+:c:func:`nx_fill`             Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file
+:c:func:`nx_getrectangle`     .                                                                YES
+:c:func:`nx_filltrapezoid`    Verified by ``nuttx-apps/examples/nxlines``.                     YES
+:c:func:`nx_drawline`         by ``nuttx-apps/examples/nxlines``.                              YES
+:c:func:`nx_drawcircle`       Verified by ``nuttx-apps/examples/nxlines``.                     YES
+:c:func:`nx_fillcircle`       Verified by ``nuttx-apps/examples/nxlines``.                     YES
+:c:func:`nx_setbgcolor`       .                                                                YES
+:c:func:`nx_move`             Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file
+:c:func:`nx_bitmap`           Change to ``CONFIG_EXAMPLES_NX_RAWWINDOWS=y`` in the             YES
+                              ``nuttx/.config`` file.
+:c:func:`nx_kbdin`                                                                             YES
+:c:func:`nx_mousein`                                                                           YES
+============================= ===============================================================  ========
+
 
 NXTK API Test Coverage
-----------------------
+^^^^^^^^^^^^^^^^^^^^^^
 
-============================ ========================= ========
-Function                     Special Setup/Notes       Verified
-============================ ========================= ========
-``nxtk_openwindow()``        .                         YES
-``nxtk_closewindow()``       .                         YES
-``nxtk_getposition()``       .                         NO
-``nxtk_setposition()``       .                         YES
-``nxtk_setsize()``           .                         YES
-``nxtk_raise()``             .                         YES
-``nxtk_lower()``             .                         YES
-``nxtk_modal()``             .                         NO
-``nxtk_setvisibility()``     Exercised using Twm4Nx    YES, informally
-``nxtk_ishidden()``          Exercised using Twm4Nx    YES, informally
-``nxtk_fillwindow()``        .                         YES
-``nxtk_getwindow()``         .                         NO
-``nxtk_filltrapwindow()``    .                         NO
-``nxtk_drawlinewindow()``    .                         YES
-``nxtk_drawcirclewindow()``  .                         YES
-``nxtk_fillcirclewindow()``  .                         YES
-``nxtk_movewindow()``        .                         NO
-``nxtk_bitmapwindow()``      .                         YES
-``nxtk_opentoolbar()``       .                         YES
-``nxtk_closetoolbar()``      .                         YES
-``nxtk_filltoolbar()``       .                         YES
-``nxtk_gettoolbar()``        .                         NO
-``nxtk_filltraptoolbar()``   .                         NO
-``nxtk_drawlinetoolbar()``   .                         NO
-``nxtk_drawcircletoolbar()`` .                         NO
-``nxtk_fillcircletoolbar()`` .                         NO
-``nxtk_movetoolbar()``       .                         NO
-``nxtk_bitmaptoolbar()``     .                         NO
-============================ ========================= ========
+================================ ========================== ========
+Function                         Special Setup/Notes        Verified
+================================ ========================== ========
+:c:func:`nxtk_openwindow`                                   YES
+:c:func:`nxtk_closewindow`                                  YES
+:c:func:`nxtk_getposition`                                  NO
+:c:func:`nxtk_setposition`                                  YES
+:c:func:`nxtk_setsize`                                      YES
+:c:func:`nxtk_raise`                                        YES
+:c:func:`nxtk_lower`                                        YES
+:c:func:`nxtk_modal`                                        NO
+:c:func:`nxtk_setvisibility`     Exercised using ``Twm4Nx`` YES, informally
+:c:func:`nxtk_ishidden`          Exercised using ``Twm4Nx`` YES, informally
+:c:func:`nxtk_fillwindow`                                   YES
+:c:func:`nxtk_getwindow`                                    NO
+:c:func:`nxtk_filltrapwindow`                               NO
+:c:func:`nxtk_drawlinewindow`                               YES
+:c:func:`nxtk_drawcirclewindow`                             YES
+:c:func:`nxtk_fillcirclewindow`                             YES
+:c:func:`nxtk_movewindow`                                   NO
+:c:func:`nxtk_bitmapwindow`                                 YES
+:c:func:`nxtk_opentoolbar`                                  YES
+:c:func:`nxtk_closetoolbar`                                 YES
+:c:func:`nxtk_filltoolbar`                                  YES
+:c:func:`nxtk_gettoolbar`                                   NO
+:c:func:`nxtk_filltraptoolbar`                              NO
+:c:func:`nxtk_drawlinetoolbar`                              NO
+:c:func:`nxtk_drawcircletoolbar`                            NO
+:c:func:`nxtk_fillcircletoolbar`                            NO
+:c:func:`nxtk_movetoolbar`                                  NO
+:c:func:`nxtk_bitmaptoolbar`                                NO
+================================ ========================== ========
+
 
 NXFONTS API Test Coverage
--------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-======================== ============================= ========
-Function                 Special Setup/Notes           Verified
-======================== ============================= ========
-``nxf_getfonthandle()``  .                             YES
-``nxf_getfontset()``     .                             YES
-``nxf_getbitmap()``      .                             YES
-``nxf_convert_2bpp()``   .                             NO
-``nxf_convert_4bpp()``   .                             NO
-``nxf_convert_8bpp()``   Use defconfig when building.  YES
-``nxf_convert_16bpp()``  .                             YES
-``nxf_convert_24bpp()``  .                             NO
-``nxf_convert_32bpp()``  .                             YES
-======================== ============================= ========
-
+=========================== ============================= ========
+Function                    Special Setup/Notes           Verified
+=========================== ============================= ========
+:c:func:`nxf_getfonthandle`                               YES
+:c:func:`nxf_getfontset`                                  YES
+:c:func:`nxf_getbitmap`                                   YES
+:c:func:`nxf_convert_2bpp`                                NO
+:c:func:`nxf_convert_4bpp`                                NO
+:c:func:`nxf_convert_8bpp`   Use defconfig when building. YES
+:c:func:`nxf_convert_16bpp`                               YES
+:c:func:`nxf_convert_24bpp`                               NO
+:c:func:`nxf_convert_32bpp`                               YES
+=========================== ============================= ========

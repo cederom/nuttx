@@ -1,0 +1,33 @@
+Framebuffer
+-----------
+
+For general description of the NuttX Video Framebuffer see the
+:ref:`framebuffer` section.
+
+LCD Framebuffer and NXGraphics
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+In order to provide updates to the LCD hardware after updates
+to the framebuffer, the LCD framebuffer front-end must be notified when
+significant changes to the framebuffer have been made.
+
+This notification is supported when ``CONFIG_NX_UPDATE=y`` is defined
+in the configuration.
+In this case, the LCD framebuffer front-end will support the special
+OS-internal interface function :c:func:`nx_notify_rectangle` which defines
+the rectangular region in the framebuffer that has been changed.
+In response to a call to :c:func:`nx_notify_rectangle` will use the
+lower-level LCD interface to update only that rectangular region on
+the display.
+
+This kind of update for standard LCD drivers is very efficient. 
+It is usually more efficient to update a region on the display than
+it is for form a complex image with text and line drawing.
+The updated region seems to update very quickly because of that.
+
+In fact, many of the low-end LCD drivers already include an internal
+framebuffer to support this style of LCD update.
+
+When used with LCD character driver, the :c:func:`nx_notify_rectangle` 
+function will be called by the character river in response 
+to the ``FBIO_UPDATE`` :ref:`ioctl` command.

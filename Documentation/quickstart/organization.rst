@@ -152,7 +152,7 @@ described `below <#NxFileSystem>`__.
 This directory contains files for graphics/video support under
 NuttX.
 
-For details see :doc:`/components/nxgraphics/index`.
+For details see :ref:`nx_graphics`.
 
 ``nuttx/include``
 =================

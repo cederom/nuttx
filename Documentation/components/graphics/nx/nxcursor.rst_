@@ -1,6 +1,10 @@
-================================
+.. _nxcursor:
+
 NX Cursor Support (``NXCURSOR``)
-================================
+--------------------------------
+
+NXCURSOR Types
+^^^^^^^^^^^^^^
 
 .. c:function:: int nxcursor_enable(NXHANDLE hnd, bool enable)
 
@@ -26,9 +30,11 @@ NX Cursor Support (``NXCURSOR``)
   - 10: Color2: The color of any border.
   - 11: Color3: A blend color for better imaging (fake anti-aliasing).
 
-  **NOTE:** The NX logic will reference the user image buffer repeatedly.
-  That image buffer must persist for as long as the NX server connection
-  persists.
+  .. note::
+
+    The NX logic will reference the user image buffer repeatedly.
+    That image buffer must persist for as long as the NX server connection
+    persists.
 
   :param hnd: The server handle returned by :c:func:`nx_connect`
   :param image:
@@ -42,8 +48,7 @@ NX Cursor Support (``NXCURSOR``)
 
   Move the cursor to the specified position.
 
-  :param hnd: The server handle returned by :c:func:`nx_connect`
-  :param pos: The new cursor position
+  :param hnd: The server handle returned by :c:func:`nx_connect`.
+  :param pos: The new cursor position.
 
   :return: OK on success; ERROR on failure with errno set appropriately.
-

@@ -1,32 +1,41 @@
-======================
-NX Tool Kit (``NXTK``)
-======================
+.. _nxtk:
 
-NXTK implements where the *framed window*. NX framed windows consist of
+NX Tool Kit (``NXTK``)
+----------------------
+
+NXTK implements where the **framed window**. NX framed windows consist of
 three components within one NX window:
 
-  #. The window *border*,
-  #. The main *client window* area, and
-  #. A *toolbar* area
+  1. The window **border**,
+  2. The main **client window** area, and
+  3. A **toolbar** area
 
-Each sub-window represents a region within one window. `Figure
-1 <#screenshot>`__ shows some simple NX framed windows. NXTK allows
-these sub-windows to be managed more-or-less independently:
+Each sub-window represents a region within one window.
+Figure :ref:`fig_nx_screenshot` shows some simple NX framed windows.
+NXTK allows these sub-windows to be managed more-or-less independently:
 
-  -  Each component has its own callbacks for redraw and position events
-     as well as mouse and keyboard inputs. The client sub-window callbacks
-     are registered when the framed window is created with a call to
-     :c:func:`nxtk_openwindow`; Separate toolbar
-     sub-window callbacks are reigistered when the toolbar is added using
-     :c:func:`nxtk_opentoolbar`. (NOTES: (1) only the
-     client sub-window receives keyboard input and, (2) border callbacks
-     are not currently accessible by the user).
-  -  All position informational provided within the callback is relative
-     to the specific sub-window. That is, the origin (0,0) of the
-     coordinate system for each sub-window begins at the top left
-     corner of the subwindow. This means that toolbar logic need not
-     be concerned about client window geometry (and vice versa) and,
-     for example, common toolbar logic can be used with different windows.
+* Each component has its own callbacks for redraw and position events
+  as well as mouse and keyboard inputs. The client sub-window callbacks
+  are registered when the framed window is created with a call to
+  :c:func:`nxtk_openwindow`; Separate toolbar
+  sub-window callbacks are reigistered when the toolbar is added using
+  :c:func:`nxtk_opentoolbar`.
+
+  .. note::
+
+    1. Only the client sub-window receives keyboard input.
+    2. Border callbacks are not currently accessible by the user.
+  
+* All position informational provided within the callback is relative
+  to the specific sub-window. That is, the origin (0,0) of the
+  coordinate system for each sub-window begins at the top left
+  corner of the subwindow. This means that toolbar logic need not
+  be concerned about client window geometry (and vice versa) and,
+  for example, common toolbar logic can be used with different windows.
+
+
+NXTK Types
+^^^^^^^^^^
 
 .. c:type:: FAR void *NXTKWINDOW
 
@@ -113,7 +122,7 @@ these sub-windows to be managed more-or-less independently:
   Create a new, framed window.
 
   :param handle:
-     The handle returned by ```nx_connect()`` <#nxconnectinstance>`__.
+     The handle returned by :c:func:`nx_connect`.
   :param flags:
      Optional flags. These include:
 
@@ -125,7 +134,7 @@ these sub-windows to be managed more-or-less independently:
   :param cb:
      Callbacks used to process window events
   :param arg:
-     User provided argument (see ```nx_openwindow()`` <#nxopenwindow>`__)
+     User provided argument (see :c:func:`nx_openwindow`).
 
   :return: Success: A non-NULL handle used with subsequent NXTK window accesses
     Failure: NULL is returned and errno is set appropriately.
@@ -133,11 +142,11 @@ these sub-windows to be managed more-or-less independently:
 .. c:function:: int nxtk_closewindow(NXTKWINDOW hfwnd);
 
   Close the window opened by
-  ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+  :c:func:`nxtk_openwindow`.
 
   :param hfwnd:
      A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     :c:func:`nxtk_openwindow`.
 
   :return: ``OK`` on success; ``ERROR`` on failure with
     ``errno`` set appropriately
@@ -151,7 +160,7 @@ these sub-windows to be managed more-or-less independently:
 
   :param hfwnd:
      A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     :c:func:`nxtk_openwindow`.
 
   :return: ``OK`` on success; ``ERROR`` on failure with
     ``errno`` set appropriately
@@ -164,7 +173,7 @@ these sub-windows to be managed more-or-less independently:
 
   :param hfwnd:
      A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     :c:func:`nxtk_openwindow`.
   :param pos:
      The new position of the client sub-window
 
@@ -179,7 +188,7 @@ these sub-windows to be managed more-or-less independently:
 
   :param hfwnd:
      A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     :c:func:`nxtk_openwindow`.
   :param size:
      The new size of the client sub-window.
 
@@ -193,8 +202,7 @@ these sub-windows to be managed more-or-less independently:
 
   :param hfwnd:
      A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__ specifying the window to
-     be raised.
+     :c:func:`nxtk_openwindow` specifying the window to be raised.
 
   :return: ``OK`` on success; ``ERROR`` on failure with
     ``errno`` set appropriately
@@ -206,8 +214,7 @@ these sub-windows to be managed more-or-less independently:
 
   :param hfwnd:
      A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__ specifying the window to
-     be lowered.
+     :c:func:`nxtk_openwindow` specifying the window to be lowered.
 
   :return: ``OK`` on success; ``ERROR`` on failure with
     ``errno`` set appropriately
@@ -218,8 +225,8 @@ these sub-windows to be managed more-or-less independently:
   the display and select modal behavior, or (2) disable modal behavior.
 
   :param hwnd:
-     The handle returned by ```nxtk_openwindow()`` <#nxtkopenwindow>`__
-     specifying the window to be modified.
+     The handle returned by :c:func:`nxtk_openwindow` specifying the window
+     to be modified.
   :param modal:
      True: enter modal state; False: leave modal state
 
@@ -233,8 +240,8 @@ these sub-windows to be managed more-or-less independently:
   visible on the display until it is unhidden.
 
   :param hwnd:
-     The handle returned by ```nxtk_openwindow()`` <#nxtkopenwindow>`__
-     specifying the window to be modified.
+     The handle returned by :c:func:`nxtk_openwindow` specifying the window
+     to be modified.
   :param hide:
      True: Window will be hidden; false: Window will be visible
 
@@ -246,14 +253,13 @@ these sub-windows to be managed more-or-less independently:
   Return true if the window is hidden.
 
   **NOTE**: There will be a delay between the time that the visibility of
-  the window is changed via
-  ```nxtk_setvisibily()`` <#nxtksetvisibility>`__ before that new setting
-  is reported by ``nxtk_ishidden()``. ``nxtk_synch()`` may be used if
-  temporal synchronization is required.
+  the window is changed via :c:func:`nxtk_setvisibily` before
+  that new setting is reported by :c:func:`nxtk_ishidden`.
+  :c:func:`nxtk_synch` may be used if temporal synchronization is required.
 
   :param hfwnd:
-     The handle returned by ```nxtk_openwindow()`` <#nxtkopenwindow>`__
-     that identifies the window to be queried.
+     The handle returned by :c:func:`nxtk_openwindow` that identifies
+     the window to be queried.
 
   :return: *True*: the window is hidden, *false*: the window is
     visible
@@ -265,8 +271,7 @@ these sub-windows to be managed more-or-less independently:
   the specified color.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param rect:
      The location within the client window to be filled
   :param color:
@@ -286,8 +291,7 @@ these sub-windows to be managed more-or-less independently:
   the top window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param rect:
      The location within the client window to be retrieved.
   :param plane:
@@ -308,8 +312,7 @@ these sub-windows to be managed more-or-less independently:
   the specified color
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param trap:
      The trapezoidal region to be filled.
   :param color:
@@ -329,8 +332,7 @@ these sub-windows to be managed more-or-less independently:
   ``nxtk_filltrapwindow()`` to render the line.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param vector:
      Describes the line to be drawn.
   :param width:
@@ -352,8 +354,7 @@ these sub-windows to be managed more-or-less independently:
   thickness and color.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param center:
      A pointer to the point that is the center of the circle.
   :param radius:
@@ -372,8 +373,7 @@ these sub-windows to be managed more-or-less independently:
   Fill a circular region using the specified color.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param center:
      A pointer to the point that is the center of the circle.
   :param radius:
@@ -391,8 +391,7 @@ these sub-windows to be managed more-or-less independently:
   of a framed window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__ specifying the client
+     A handle previously returned by :c:func:`nxtk_openwindow` specifying the client
      sub-window within which the move is to be done.
   :param rect:
      Describes the rectangular region relative to the client sub-window to
@@ -413,9 +412,8 @@ these sub-windows to be managed more-or-less independently:
   rectangle in the specified client sub-window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__ specifying the client
-     sub-window that will receive the bitmap.
+     A handle previously returned by :c:func:`nxtk_openwindow`
+     specifying the client sub-window that will receive the bitmap.
   :param dest:
      Describes the rectangular region on in the client sub-window will
      receive the bit map.
@@ -440,8 +438,7 @@ these sub-windows to be managed more-or-less independently:
   window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param height:
      The requested height of the toolbar in pixels.
   :param cb:
@@ -458,8 +455,7 @@ these sub-windows to be managed more-or-less independently:
   window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
 
   :return: ``OK`` on success; ``ERROR`` on failure with
     ``errno`` set appropriately
@@ -471,8 +467,7 @@ these sub-windows to be managed more-or-less independently:
   with the specified color.
 
   :param hfwnd:
-    A handle previously returned by
-    ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+    A handle previously returned by :c:func:`nxtk_openwindow`.
   :param rect:
     The location within the toolbar window to be filled.
   :param color:
@@ -492,8 +487,7 @@ these sub-windows to be managed more-or-less independently:
   the top window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param rect:
      The location within the toolbar window to be retrieved.
   :param plane:
@@ -513,8 +507,7 @@ these sub-windows to be managed more-or-less independently:
   with the specified color.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param trap:
      The trapezoidal region to be filled
   :param color:
@@ -533,8 +526,7 @@ these sub-windows to be managed more-or-less independently:
   ``nxtk_filltraptoolbar()`` to render the line.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param vector:
      Describes the line to be drawn.
   :param width:
@@ -565,8 +557,7 @@ these sub-windows to be managed more-or-less independently:
   thickness and color.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param center:
      A pointer to the point that is the center of the circle.
   :param radius:
@@ -585,8 +576,7 @@ these sub-windows to be managed more-or-less independently:
   Fill a circular region using the specified color.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param center:
      A pointer to the point that is the center of the circle.
   :param radius:
@@ -606,7 +596,7 @@ these sub-windows to be managed more-or-less independently:
   :param hfwnd:
      A handle identifying sub-window containing the toolbar within which
      the move is to be done. This handle must have previously been
-     returned by ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     returned by :c:func:`nxtk_openwindow`.
   :param rect:
      Describes the rectangular region relative to the toolbar sub-window
      to move.
@@ -626,8 +616,7 @@ these sub-windows to be managed more-or-less independently:
   rectangle in the specified toolbar sub-window.
 
   :param hfwnd:
-     A handle previously returned by
-     ```nxtk_openwindow()`` <#nxtkopenwindow>`__.
+     A handle previously returned by :c:func:`nxtk_openwindow`.
   :param dest:
      Describes the rectangular region on in the toolbar sub-window will
      receive the bit map.
@@ -642,6 +631,3 @@ these sub-windows to be managed more-or-less independently:
 
   :return: ``OK`` on success; ``ERROR`` on failure with
     ``errno`` set appropriately
-
-.. _nx-fonts-support-nxfonts-1:
-
